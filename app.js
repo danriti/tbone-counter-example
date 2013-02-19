@@ -8,8 +8,8 @@
             value: 0
         };
     }).singleton();
-    
-    tbone.createModel('clock', tbone.models.base, {
+
+    tbone.createModel('timer', tbone.models.base, {
         depends: {
             '*': ['counter']
         },
@@ -21,7 +21,7 @@
             var seconds = count % 60;
             var minutes = Math.floor(count / 60);
 
-            // Pad the left side (i.e. 09 instead of 9) of the seconds 
+            // Pad the left side (i.e. 09 instead of 9) of the seconds
             // and minutes.
             rval.seconds = _.string.pad(seconds, 2, '0');
             rval.minutes = _.string.pad(minutes, 2, '0');
@@ -70,5 +70,5 @@
         });
     });
 
-    tbone.render(jQuery('[tbone]')); 
+    tbone.render(jQuery('[tbone]'));
 }());
