@@ -10,38 +10,43 @@
     }).singleton();
 
     // Views
-    tbone.createView('counterStart', function() {
-        var that = this.$el;
-        function increment() {
-            // Lookup the counter model value.
-            var i = tbone.lookup('counter.value');
+    tbone.createView('counterControl', function() {
+        var self = this;
 
-            // Increment the counter model value.
-            tbone.set('counter.value', i+1);
-        }
-        function start() {
-            var intervalId = setInterval(increment, 1000);
+        var startBtn = self.$('button#start');
+        var stopBtn = self.$('button#stop');
+        var resetBtn = self.$('button#reset');
+
+        // Initially disable the stop button.
+        stopBtn.attr("disabled", true);
+
+        startBtn.click(function() {
+            // Set button states.
+            startBtn.attr('disabled', true);
+            stopBtn.removeAttr('disabled');
+
+            var intervalId = setInterval(function() {
+                // Lookup the counter model value.
+                var i = tbone.lookup('counter.value');
+
+                // Increment the counter model value.
+                tbone.set('counter.value', i+1);
+            }, 1000);
             tbone.set('counter.intervalId', intervalId);
-        }
-        that.click(start);
-    });
+        });
 
-    tbone.createView('counterStop', function() {
-        var that = this.$el;
-        function stop() {
+        stopBtn.click(function() {
+            // Set button states.
+            stopBtn.attr('disabled', true);
+            startBtn.removeAttr('disabled');
+
             var intervalId = tbone.lookup('counter.intervalId');
             clearInterval(intervalId);
-        }
-        that.click(stop);
-    });
+        });
 
-    tbone.createView('counterReset', function() {
-        var that = this.$el;
-        function reset() {
-            console.log('counterReset called!');
+        resetBtn.click(function() {
             tbone.set('counter.value', 0);
-        }
-        that.click(reset);
+        });
     });
 
     tbone.render(jQuery('[tbone]')); 

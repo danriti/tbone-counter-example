@@ -5,15 +5,22 @@
 <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap-responsive.css">
 </head>
 <body>
-    <h1>Tbone Counter Example!</h1> 
+    <div class="container">
+      <h1>Tbone Counter Example!</h1> 
+    
+      <hr>
 
-    <div tbone="inline counter">
-        Counter: <%=counter.value%>
+      <div tbone="inline counter">
+          <h3>Counter: <%=counter.value%></h3>
+      </div>
+
+      <div tbone="view counterControl">
+          <button class="btn" id="start">Start</button>
+          <button class="btn" id="stop">Stop</button>
+          <button class="btn" id="reset">Reset</button>
+      </div>
+
     </div>
-
-    <button tbone="view counterStart">Start</button>
-    <button tbone="view counterStop">Stop</button>
-    <button tbone="view counterReset">Reset</button>
 
     <!-- Le javascript -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
