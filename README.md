@@ -13,8 +13,8 @@ I've been working primarily on improving our TraceView page, which provides
 an in-depth look into the performance of dynamic web-based applications. The
 major challenge in our front end web application is managing data dependencies (i.e. Update `foo` when `bar` changes) while
 also maintaining a rich user experience. We deal with alot of data, from numerous sources,
-and all with unique dependencies. Thus, we have developed TBone.js, an open source
-library for Backbone.js to help us out.
+and all with unique dependencies. Thus, we have developed [TBone](http://tbonejs.org/), an open source
+library for [Backbone.js](http://backbonejs.org/) to help us out.
 
 ## Enter TBone
 
@@ -36,9 +36,9 @@ and model stays in sync by design and without unnecessary work.
 ## Digging into TBone
 
 Let's implement a sample application that demonstrates some of the "automagic"
-of TBone. For this example, we will build a simple counter that increments
+of TBone. For this example, we will build a simple `counter` that increments
 every second, implement some simple controls (Start/Stop/Reset), and finally demonstrate data
-dependency by introducing a model that depends on the counter. Let's get
+dependency by introducing a model that depends on the `counter`. Let's get
 started!
 
 **NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or cloned using git:
@@ -130,8 +130,8 @@ Finally, we will bind our model and views to our template:
 ```
 
 So what's happening? When you click the **Start** button, the `value` attribute in the
-`counter` model is being incremented each second. Everytime the  model changes,
-the template is forced to update to display the newest data. As you play with
+`counter` model is being incremented every second. Everytime the  model changes,
+the template is forced to update to display the latest data. As you play with
 the other controls, you will notice that template responds accordingly. This is
 an example of "live" templating in TBone.
 
