@@ -5,11 +5,15 @@
 <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap-responsive.css">
 </head>
 <body>
-    <h1>Tick Tock!</h1> 
+    <h1>Tbone Counter Example!</h1> 
 
-    <div tbone="inline count">
+    <div tbone="inline counter">
         Counter: <%=counter.value%>
     </div>
+
+    <button tbone="view counterStart">Start</button>
+    <button tbone="view counterStop">Stop</button>
+    <button tbone="view counterReset">Reset</button>
 
     <!-- Le javascript -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
