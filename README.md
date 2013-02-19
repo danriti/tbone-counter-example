@@ -1,4 +1,4 @@
-# Title
+# TBone Counter Example
 
 I'm Dan, the latest addition to the Tracelytics team! 
 
@@ -11,6 +11,7 @@ when the data they reference changes.
 
 - The Problem: Managing complexity in front end web applications (Javascript)
 - Event handling binds data to views
+- Data dependencies between models
 - As number of data sources increases, so does need to manage all the event
   handling between data and views.
 - The solution: Tbone, automagic event handling for Backbone.
