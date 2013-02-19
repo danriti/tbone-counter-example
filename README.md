@@ -19,7 +19,7 @@ learning about both Backbone.js and TBone.js
 - TBone.js is an open source library for Backbone.js that provides "automagic"
   event-binding.
 
-# Enter TBone
+## Enter TBone
 
 TBone removes the complexity of manually managing data dependencies in Backbone,
 enabling "live" templates as well as functions that automatically re-execute when
@@ -36,7 +36,7 @@ changes. While Backbone is a critical step toward reducing this complexity,
 TBone enables us to do so without even thinking about event binding; every view
 and model stays in sync by design and without unnecessary work.
 
-# Digging into TBone
+## Digging into TBone
 
 Let's implement a sample application that demonstrates some of the "automagic"
 of TBone. For this example, we will build a simple counter that increments
@@ -44,85 +44,91 @@ every second, implement some simple controls (Start/Stop/Reset), and finally dem
 dependency by introducing a model that depends on the counter. Let's get
 started!
 
-**NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or clone using git:
+**NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or cloned using git:
 
     $ git clone git@github.com:danriti/tbone-counter-example.git
 
 First, we will create a model to represent the `counter` using TBone:
 
-    tbone.createModel('counter', function () {
-        return {
-            intervalId: 0,
-            value: 0
-        };
-    }).singleton();
+```javascript
+tbone.createModel('counter', function () {
+    return {
+        intervalId: 0,
+        value: 0
+    };
+}).singleton();
+```
 
-Our `counter` model contains two attributes, **intervalId** and **value**.
-We will be using the [setInterval](#) method to increment the counter, so **intervalId**
-will store the interval id and **value** will simply store the counter value.
+Our `counter` model contains two attributes, `intervalId` and `value`.
+We will be using the [setInterval](https://developer.mozilla.org/en-US/docs/DOM/window.setInterval) method to increment the counter, so `intervalId`
+will store the interval id and `value` will simply store the counter value.
 
 Next, we will create a view for controlling (Start, Stop, Reset) the counter:
 
-    tbone.createView('counterControl', function() {
-        var self = this;
+```javascript
+tbone.createView('counterControl', function() {
+    var self = this;
 
-        var startBtn = self.$('button#start');
-        var stopBtn = self.$('button#stop');
-        var resetBtn = self.$('button#reset');
+    var startBtn = self.$('button#start');
+    var stopBtn = self.$('button#stop');
+    var resetBtn = self.$('button#reset');
 
-        // Initially disable the stop button.
-        stopBtn.attr("disabled", true);
+    // Initially disable the stop button.
+    stopBtn.attr("disabled", true);
 
-        // Event handler for the start button click.
-        startBtn.click(function() {
-            // Set button states.
-            startBtn.attr('disabled', true);
-            stopBtn.removeAttr('disabled');
+    // Event handler for the start button click.
+    startBtn.click(function() {
+        // Set button states.
+        startBtn.attr('disabled', true);
+        stopBtn.removeAttr('disabled');
 
-            // Increment the counter every second.
-            var intervalId = setInterval(function() {
-                // Lookup the counter model value.
-                var i = tbone.lookup('counter.value');
+        // Increment the counter every second.
+        var intervalId = setInterval(function() {
+            // Lookup the counter model value.
+            var i = tbone.lookup('counter.value');
 
-                // Increment the counter model value.
-                tbone.set('counter.value', i+1);
-            }, 1000);
+            // Increment the counter model value.
+            tbone.set('counter.value', i+1);
+        }, 1000);
 
-            tbone.set('counter.intervalId', intervalId);
-        });
-
-        // Event handler for the stop button click.
-        stopBtn.click(function() {
-            // Set button states.
-            stopBtn.attr('disabled', true);
-            startBtn.removeAttr('disabled');
-
-            // Fetch the interval id and stop incrementing the counter.
-            var intervalId = tbone.lookup('counter.intervalId');
-            clearInterval(intervalId);
-        });
-
-        // Event handler for the reset button click.
-        resetBtn.click(function() {
-            // Reset the counter value to 0.
-            tbone.set('counter.value', 0);
-        });
+        tbone.set('counter.intervalId', intervalId);
     });
+
+    // Event handler for the stop button click.
+    stopBtn.click(function() {
+        // Set button states.
+        stopBtn.attr('disabled', true);
+        startBtn.removeAttr('disabled');
+
+        // Fetch the interval id and stop incrementing the counter.
+        var intervalId = tbone.lookup('counter.intervalId');
+        clearInterval(intervalId);
+    });
+
+    // Event handler for the reset button click.
+    resetBtn.click(function() {
+        // Reset the counter value to 0.
+        tbone.set('counter.value', 0);
+    });
+});
+```
 
 Finally, we will bind our model and views to our template:
 
-    <div class="container">
-      <h1>TBone Counter Example!</h1>
-      <hr>
-      <div tbone="inline counter">
-          <h3>Counter - <%=counter.value%></h3>
-      </div>
-      <div tbone="view counterControl">
-          <button class="btn" id="start">Start</button>
-          <button class="btn" id="stop">Stop</button>
-          <button class="btn" id="reset">Reset</button>
-      </div>
-    </div>
+```html
+<div class="container">
+  <h1>TBone Counter Example!</h1>
+  <hr>
+  <div tbone="inline counter">
+      <h3>Counter - <%=counter.value%></h3>
+  </div>
+  <div tbone="view counterControl">
+      <button class="btn" id="start">Start</button>
+      <button class="btn" id="stop">Stop</button>
+      <button class="btn" id="reset">Reset</button>
+  </div>
+</div>
+```
 
 So what's happening? When you click **Start**, the `value` attribute in the
 `counter` model is being incremented each second. Everytime the  model changes,
@@ -134,26 +140,28 @@ So now let's make things interesting. Let's introduce a new model called `timer`
 assume it is depends on the `counter` model to keep track of time. Well in TBone,
 this is pretty simple:
 
-    tbone.createModel('timer', tbone.models.base, {
-        depends: {
-            '*': ['counter']
-        },
-        calc: function(state) {
-            var count = state.value || 0;
-            var rval = {};
+```javascript
+tbone.createModel('timer', tbone.models.base, {
+    depends: {
+        '*': ['counter']
+    },
+    calc: function(state) {
+        var count = state.value || 0;
+        var rval = {};
 
-            // Calculate seconds and minutes.
-            var seconds = count % 60;
-            var minutes = Math.floor(count / 60);
+        // Calculate seconds and minutes.
+        var seconds = count % 60;
+        var minutes = Math.floor(count / 60);
 
-            // Pad the left side (i.e. 09 instead of 9) of the seconds
-            // and minutes.
-            rval.seconds = _.string.pad(seconds, 2, '0');
-            rval.minutes = _.string.pad(minutes, 2, '0');
+        // Pad the left side (i.e. 09 instead of 9) of the seconds
+        // and minutes.
+        rval.seconds = _.string.pad(seconds, 2, '0');
+        rval.minutes = _.string.pad(minutes, 2, '0');
 
-            return rval;
-        }
-    }).singleton();
+        return rval;
+    }
+}).singleton();
+```
 
 When creating `timer`, we tell it TBone that this model depends on the `counter`
 model. Thus, anytime the `counter` model changes, the `calc` method will fire,
@@ -162,9 +170,11 @@ neat huh? Well let's see it in action!
 
 Just update your template to add the timer:
 
-    <div tbone="inline timer">
-        <h3>Timer (MM:SS) - <%=timer.minutes%>:<%=timer.seconds%></h3>
-    </div>
+```html
+<div tbone="inline timer">
+    <h3>Timer (MM:SS) - <%=timer.minutes%>:<%=timer.seconds%></h3>
+</div>
+```
 
 Now the newly created `timer` model will update seemlessly as the `counter`
 model increments away! Isn't TBone delicious?
