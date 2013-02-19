@@ -11,7 +11,7 @@
       <hr>
 
       <div tbone="inline counter">
-          <h3>Counter: <%=counter.value%></h3>
+          <h3>Counter - <%=counter.value%></h3>
       </div>
 
       <div tbone="view counterControl">
@@ -20,11 +20,18 @@
           <button class="btn" id="reset">Reset</button>
       </div>
 
+      <hr>
+
+      <div tbone="inline clock">
+          <h3>Timer (MM:SS) - <%=clock.minutes%>:<%=clock.seconds%></h3>
+      </div>
+
     </div>
 
     <!-- Le javascript -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="lib/jquery/jquery.js"></script>
     <script src="lib/underscore/underscore.js"></script>
+    <script src="lib/underscore/underscore.string.js"></script>
     <script src="lib/backbone/backbone.js"></script>
     <script src="lib/tbone/tbone.js"></script>
     <script src="app.js"></script>

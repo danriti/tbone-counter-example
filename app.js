@@ -8,6 +8,27 @@
             value: 0
         };
     }).singleton();
+    
+    tbone.createModel('clock', tbone.models.base, {
+        depends: {
+            '*': ['counter']
+        },
+        calc: function(state) {
+            var count = state.value || 0;
+            var rval = {};
+
+            // Calculate seconds and minutes.
+            var seconds = count % 60;
+            var minutes = Math.floor(count / 60);
+
+            // Pad the left side (i.e. 09 instead of 9) of the seconds 
+            // and minutes.
+            rval.seconds = _.string.pad(seconds, 2, '0');
+            rval.minutes = _.string.pad(minutes, 2, '0');
+
+            return rval;
+        }
+    }).singleton();
 
     // Views
     tbone.createView('counterControl', function() {
