@@ -4,20 +4,17 @@
 
 Hey! I'm Dan Riti, the latest addition to the Tracelytics (or AppNeta?) team! I
 recently joined as a full stack engineer in the Providence office and it's been
-an exciting past couple of weeks learning about the world of tracing web-based
-applications.
+an exciting past couple of weeks learning about the world of tracing distributed
+web-based applications.
 
 ## TraceView
 
-I've been working primarily on a new version of our TraceView page, which provides
-in-depth performance insight into dynamic web-based applications. This means
-learning about both Backbone.js and TBone.js
-
-- Working on trace details page
-- Plug what the TraceView page does!
-- It is built upon Backbone.js and TBone.js
-- TBone.js is an open source library for Backbone.js that provides "automagic"
-  event-binding.
+I've been working primarily on improving our TraceView page, which provides
+an in-depth look into the performance of dynamic web-based applications. The
+major challenge in our front end web application is managing data dependencies (i.e. Update `foo` when `bar` changes) while
+also maintaining a rich user experience. We deal with alot of data, from numerous sources,
+and all with unique dependencies. Thus, we have developed TBone.js, an open source
+library for Backbone.js to help us out.
 
 ## Enter TBone
 
@@ -46,7 +43,9 @@ started!
 
 **NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or cloned using git:
 
-    $ git clone git@github.com:danriti/tbone-counter-example.git
+```bash
+$ git clone git@github.com:danriti/tbone-counter-example.git
+```
 
 First, we will create a model to represent the `counter` using TBone:
 
@@ -130,7 +129,7 @@ Finally, we will bind our model and views to our template:
 </div>
 ```
 
-So what's happening? When you click **Start**, the `value` attribute in the
+So what's happening? When you click the **Start** button, the `value` attribute in the
 `counter` model is being incremented each second. Everytime the  model changes,
 the template is forced to update to display the newest data. As you play with
 the other controls, you will notice that template responds accordingly. This is
