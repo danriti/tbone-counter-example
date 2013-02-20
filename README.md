@@ -2,19 +2,19 @@
 
 ## Welcome
 
-Hey! I'm Dan Riti, the latest addition to the Tracelytics (or AppNeta?) team! I
+Hey! I'm Dan Riti, the latest addition to the TraceView team! I
 recently joined as a full stack engineer in the Providence office and it's been
 an exciting past couple of weeks learning about the world of tracing distributed
-web-based applications.
+web applications.
 
 ## TraceView
 
-I've been working primarily on improving our TraceView page, which provides
-an in-depth look into the performance of dynamic web-based applications. The
+I've been working primarily on improving our Trace Details page, which provides
+an in-depth look into the performance of individual requests. The
 major challenge in our front end web application is managing data dependencies (i.e. Update `foo` when `bar` changes) while
-also maintaining a rich user experience. We deal with alot of data, from numerous sources,
-and all with unique dependencies. Thus, we have developed [TBone](http://tbonejs.org/), an open source
-library for [Backbone.js](http://backbonejs.org/) to help us out.
+also maintaining a rich user experience. We deal with a lot of data, from numerous sources,
+and all with unique dependencies. Thus, we have developed [TBone](http://tbonejs.org/), an open-source
+extension to [Backbone.js](http://backbonejs.org/) to help us out.
 
 ## Enter TBone
 
@@ -22,12 +22,13 @@ TBone removes the complexity of manually managing data dependencies in Backbone,
 enabling "live" templates as well as functions that automatically re-execute when
 the data they reference changes.
 
-TBone is designed to scale with your application, enabling simple re-use of data
-throughout your application without you needing to tell the page what to update
+It's designed to build on top of existing backbone-powered apps and scale with
+the application, enabling simple re-use of data
+throughout your application without the need to tell the page what to update
 when that data changes.
 
 At AppNeta, we've used TBone to eliminate a set of custom page events
-corresponding such as "refresh data" and "add filter"; with a large application,
+corresponding to interactions like "refresh data" and "add filter"; with a large application,
 it becomes difficult to manage what exactly needs to be refreshed when something
 changes. While Backbone is a critical step toward reducing this complexity,
 TBone enables us to do so without even thinking about event binding; every view
@@ -38,14 +39,13 @@ and model stays in sync by design and without unnecessary work.
 Let's implement a sample application that demonstrates some of the "automagic"
 of TBone. For this example, we will build a simple `counter` that increments
 every second, implement some simple controls (Start/Stop/Reset), and finally demonstrate data
-dependency by introducing a model that depends on the `counter`. Let's get
-started!
+dependency by introducing a model that depends on the `counter`. 
 
-**NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or cloned using git:
+* Try out this example on [JS Bin](http://jsbin.com/uxuxew/3/edit)!
+* Or view the code on [Github](https://github.com/danriti/tbone-counter-example).
+* Or clone the repo: `git clone git://github.com/danriti/tbone-counter-example.git`
 
-```bash
-$ git clone git@github.com:danriti/tbone-counter-example.git
-```
+Now that you're looking at the code, let's get started!
 
 First, we will create a model to represent the `counter` using TBone:
 
@@ -136,7 +136,7 @@ the other controls, you will notice that template responds accordingly. This is
 an example of "live" templating in TBone.
 
 So now let's make things interesting. Let's introduce a new model called `timer`, however let's
-assume it is depends on the `counter` model to keep track of time. Well in TBone,
+assume it is depends on the `counter` model to keep track of time.  In TBone,
 this is pretty simple:
 
 ```javascript
@@ -165,7 +165,7 @@ tbone.createModel('timer', tbone.models.base, {
 When creating `timer`, we tell it TBone that this model depends on the `counter`
 model. Thus, anytime the `counter` model changes, the `calc` method will fire,
 and recalculate the attributes (seconds & minutes) for the `timer` model. Pretty
-neat huh? Well let's see it in action!
+neat, huh? Well, let's see it in action!
 
 Just update your template to add the timer:
 
@@ -176,4 +176,6 @@ Just update your template to add the timer:
 ```
 
 Now the newly created `timer` model will update seemlessly as the `counter`
-model increments away! Isn't TBone delicious?
+model increments away!
+
+Isn't TBone delicious?  If you'd like seconds, be sure to [check it out on github](https://github.com/appneta/tbone).
