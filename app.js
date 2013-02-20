@@ -4,12 +4,11 @@
     /**
      * Models
      */
-    tbone.createModel('counter', function () {
-        return {
-            intervalId: 0,
-            value: 0
-        };
-    }).singleton();
+    tbone.createModel('counter').singleton();
+    tbone.set('counter', {
+        intervalId: 0,
+        value: 0
+    });
 
     tbone.createModel('timer', tbone.models.base, {
         calc: function () {
