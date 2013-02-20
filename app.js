@@ -12,11 +12,8 @@
     }).singleton();
 
     tbone.createModel('timer', tbone.models.base, {
-        depends: {
-            '*': ['counter']
-        },
-        calc: function(state) {
-            var count = state.value || 0;
+        calc: function () {
+            var count = tbone.lookup('counter.value') || 0;
             var rval = {};
 
             // Calculate seconds and minutes.
