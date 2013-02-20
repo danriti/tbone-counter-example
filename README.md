@@ -39,14 +39,13 @@ and model stays in sync by design and without unnecessary work.
 Let's implement a sample application that demonstrates some of the "automagic"
 of TBone. For this example, we will build a simple `counter` that increments
 every second, implement some simple controls (Start/Stop/Reset), and finally demonstrate data
-dependency by introducing a model that depends on the `counter`. Let's get
-started!
+dependency by introducing a model that depends on the `counter`. 
 
-**NOTE**: This code can be viewed [here](https://github.com/danriti/tbone-counter-example) or cloned using git:
+* Try out this example on [JS Bin](http://jsbin.com/uxuxew/3/edit)!
+* Or view the code on [Github](https://github.com/danriti/tbone-counter-example).
+* Or clone the repo: `git clone git://github.com/danriti/tbone-counter-example.git`
 
-```bash
-$ git clone git@github.com:danriti/tbone-counter-example.git
-```
+Now that you're looking at the code, let's get started!
 
 First, we will create a model to represent the `counter` using TBone:
 
