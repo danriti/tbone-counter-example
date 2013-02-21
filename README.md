@@ -41,7 +41,7 @@ of TBone. For this example, we will build a simple `counter` that increments
 every second, implement some simple controls (Start/Stop/Reset), and finally demonstrate data
 dependency by introducing a model that depends on the `counter`.
 
-* Try out this example on [JS Bin](http://jsbin.com/uxuxew/8/edit)!
+* Try out this example on [JS Bin](http://jsbin.com/uxuxew/9/edit)!
 * Or view the code on [Github](https://github.com/danriti/tbone-counter-example).
 * Or clone the repo: `git clone git://github.com/danriti/tbone-counter-example.git`
 
@@ -50,17 +50,20 @@ Now that you're looking at the code, let's get started!
 First, we will create a model to represent the `counter` using TBone:
 
 ```javascript
-tbone.createModel('counter', function () {
-    return {
-        intervalId: 0,
-        value: 0
-    };
-}).singleton();
+tbone.createModel('counter').singleton();
 ```
 
-Our `counter` model contains two attributes, `intervalId` and `value`.
+Our `counter` model needs two attributes, `intervalId` and `value`.
 We will be using the [setInterval](https://developer.mozilla.org/en-US/docs/DOM/window.setInterval) method to increment the counter, so `intervalId`
-will store the interval id and `value` will simply store the counter value.
+will store the interval id and `value` will simply store the counter value. So
+let's set them:
+
+```javascript
+tbone.set('counter', {
+    intervalId: 0,
+    value: 0
+});
+```
 
 Next, we will create a view for controlling (Start, Stop, Reset) the counter:
 
@@ -141,11 +144,8 @@ this is pretty simple:
 
 ```javascript
 tbone.createModel('timer', tbone.models.base, {
-    depends: {
-        '*': ['counter']
-    },
-    calc: function(state) {
-        var count = state.value || 0;
+    calc: function () {
+        var count = tbone.lookup('counter.value') || 0;
         var rval = {};
 
         // Calculate seconds and minutes.
@@ -162,10 +162,12 @@ tbone.createModel('timer', tbone.models.base, {
 }).singleton();
 ```
 
-When creating `timer`, we tell it TBone that this model depends on the `counter`
-model. Thus, anytime the `counter` model changes, the `calc` method will fire,
-and recalculate the attributes (seconds & minutes) for the `timer` model. Pretty
-neat, huh? Well, let's see it in action!
+When creating the `timer` model, we tell TBone that this model depends on the
+`counter` model by performing a `tbone.lookup` within the `calc` method. TBone
+now knows a dependency exists between the two models and handles all the
+heavy lifting for us. Thus, anytime the `counter` model changes, the
+`timer.calc` method will execute and the `timer` model attributes (seconds &
+minutes) will be recalculated. Pretty neat, huh? Well, let's see it in action!
 
 Just update your template to add the timer:
 
@@ -178,4 +180,4 @@ Just update your template to add the timer:
 Now the newly created `timer` model will update seemlessly as the `counter`
 model increments away!
 
-Isn't TBone delicious?  If you'd like seconds, be sure to [check it out on github](https://github.com/appneta/tbone).
+Isn't TBone delicious? If you'd like seconds, be sure to [check it out on Github](https://github.com/appneta/tbone).
