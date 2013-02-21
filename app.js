@@ -4,19 +4,15 @@
     /**
      * Models
      */
-    tbone.createModel('counter', function () {
-        return {
-            intervalId: 0,
-            value: 0
-        };
-    }).singleton();
+    tbone.createModel('counter').singleton();
+    tbone.set('counter', {
+        intervalId: 0,
+        value: 0
+    });
 
     tbone.createModel('timer', tbone.models.base, {
-        depends: {
-            '*': ['counter']
-        },
-        calc: function(state) {
-            var count = state.value || 0;
+        calc: function () {
+            var count = tbone.lookup('counter.value') || 0;
             var rval = {};
 
             // Calculate seconds and minutes.
