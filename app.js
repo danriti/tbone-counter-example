@@ -10,22 +10,20 @@
         value: 0
     });
 
-    tbone.createModel('timer', tbone.models.base, {
-        calc: function () {
-            var count = tbone.lookup('counter.value') || 0;
-            var rval = {};
+    tbone.createModel('timer', function() {
+        var count = tbone.lookup('counter.value') || 0;
+        var rval = {};
 
-            // Calculate seconds and minutes.
-            var seconds = count % 60;
-            var minutes = Math.floor(count / 60);
+        // Calculate seconds and minutes.
+        var seconds = count % 60;
+        var minutes = Math.floor(count / 60);
 
-            // Pad the left side (i.e. 09 instead of 9) of the seconds
-            // and minutes.
-            rval.seconds = _.string.pad(seconds, 2, '0');
-            rval.minutes = _.string.pad(minutes, 2, '0');
+        // Pad the left side (i.e. 09 instead of 9) of the seconds
+        // and minutes.
+        rval.seconds = _.string.pad(seconds, 2, '0');
+        rval.minutes = _.string.pad(minutes, 2, '0');
 
-            return rval;
-        }
+        return rval;
     }).singleton();
 
     /**
