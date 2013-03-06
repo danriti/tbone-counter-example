@@ -41,7 +41,7 @@ of TBone. For this example, we will build a simple `counter` that increments
 every second, implement some simple controls (Start/Stop/Reset), and finally demonstrate data
 dependency by introducing a model that depends on the `counter`.
 
-* Try out this example on [JS Bin](http://jsbin.com/uxuxew/9/edit)!
+* Try out this example on [JS Bin](http://jsbin.com/uxuxew/10/edit)!
 * Or view the code on [Github](https://github.com/danriti/tbone-counter-example).
 * Or clone the repo: `git clone git://github.com/danriti/tbone-counter-example.git`
 
@@ -143,30 +143,28 @@ assume it is depends on the `counter` model to keep track of time.  In TBone,
 this is pretty simple:
 
 ```javascript
-tbone.createModel('timer', tbone.models.base, {
-    calc: function () {
-        var count = tbone.lookup('counter.value') || 0;
-        var rval = {};
+tbone.createModel('timer', function() {
+    var count = tbone.lookup('counter.value') || 0;
+    var rval = {};
 
-        // Calculate seconds and minutes.
-        var seconds = count % 60;
-        var minutes = Math.floor(count / 60);
+    // Calculate seconds and minutes.
+    var seconds = count % 60;
+    var minutes = Math.floor(count / 60);
 
-        // Pad the left side (i.e. 09 instead of 9) of the seconds
-        // and minutes.
-        rval.seconds = _.string.pad(seconds, 2, '0');
-        rval.minutes = _.string.pad(minutes, 2, '0');
+    // Pad the left side (i.e. 09 instead of 9) of the seconds
+    // and minutes.
+    rval.seconds = _.string.pad(seconds, 2, '0');
+    rval.minutes = _.string.pad(minutes, 2, '0');
 
-        return rval;
-    }
+    return rval;
 }).singleton();
 ```
 
 When creating the `timer` model, we tell TBone that this model depends on the
-`counter` model by performing a `tbone.lookup` within the `calc` method. TBone
+`counter` model by performing a `tbone.lookup` within the anonymous function we pass in. TBone
 now knows a dependency exists between the two models and handles all the
 heavy lifting for us. Thus, anytime the `counter` model changes, the
-`timer.calc` method will execute and the `timer` model attributes (seconds &
+anonymous function will execute and the `timer` model attributes (seconds &
 minutes) will be recalculated. Pretty neat, huh? Well, let's see it in action!
 
 Just update your template to add the timer:
